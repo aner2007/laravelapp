@@ -6,11 +6,26 @@ use App\Models\Accommodation;
 
 class AccommodationService
 {
-    public function getAvailableAccommodations()
+/*    public function getAvailableAccommodations()
     {
         // Dohvati sve slobodne smještaje
         return Accommodation::where('status', 'slobodan')->get();
     }
+*/
+    public function getAvailableAccommodations()
+    {
+        $today = date('Y-m-d');
+        
+        // Dohvati sve slobodne smještaje
+        $accommodations = Accommodation::where('status', 'slobodan')
+            ->whereDoesntHave('bookings', function ($query) use ($today) {
+                $query->where('check_out', '>=', $today);
+            })
+            ->get();
+        
+        return $accommodations;
+    }
+    
 
     public function markAccommodationAsReserved($accommodationId)
     {

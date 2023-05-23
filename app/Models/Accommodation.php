@@ -10,6 +10,8 @@ class Accommodation extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['_token', 'title', 'description', 'price'];
+
     /**
      * Get the factory for this model.
      *
@@ -21,12 +23,11 @@ class Accommodation extends Model
     }
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * Get the bookings for the accommodation.
      */
-    protected $fillable = ['_token', 'title', 'description', 'price'];
-
-    // Ostatak vaše klase...
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+  
 }
-

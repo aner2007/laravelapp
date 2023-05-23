@@ -19,6 +19,7 @@ class CreateBookingsTable extends Migration
             $table->foreignId('accommodation_id')->constrained();
             $table->dateTime('start_date');
             $table->dateTime('end_date');
+            $table->dateTime('check_out')->nullable();
             $table->timestamps();
         });
         
